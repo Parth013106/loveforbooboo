@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffeef8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        p.message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards 0.5s;
+        }
+        
+        .heart-btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards 1s;
+        }
+        
+        .heart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+        }
+        
+        .flower {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            z-index: 1;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        .hidden-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            text-align: center;
+            max-width: 80%;
+            display: none;
+            animation: popIn 0.5s forwards;
+        }
+        
+        .hidden-message h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+        }
+        
+        .hidden-message p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .flowers-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="flowers-container" id="flowers"></div>
+    
+    <div class="container">
+        <h1>For My Beautiful Girlfriend, SHANAYA BABYY</h1>
+        
+        <p class="message">
+            Every moment with you is like a beautiful flower blooming in my heart. 
+            You bring color and joy to my life in ways I never imagined possible.
+        </p>
+        
+        <p class="message">
+            Just like these flowers, my love for you grows more beautiful with each passing day.
+        </p>
+        
+        <p class="message">
+            You're the most amazing person I know, and I'm so grateful to have you in my life.
+        </p>
+        
+        <button class="heart-btn" id="heartBtn">Click for a Special Message</button>
+    </div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <h2>Just For You</h2>
+        <p>No matter where life takes us, I'll always be here for you.</p>
+        <p>You make every day brighter just by being you.</p>
+        <p>I love you more than words can express ❤</p>
+        <button class="close-btn" id="closeBtn">Close</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating flowers
+            const flowersContainer = document.getElementById('flowers');
+            const flowerTypes = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷'];
+            const colors = ['#ff6b9d', '#ff9eb5', '#ffb6c1', '#ffc0cb', '#ffd1dc'];
+            
+            for (let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.innerHTML = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = Math.random() * 100 + 'vh';
+                flower.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                flower.style.color = colors[Math.floor(Math.random() * colors.length)];
+                flower.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                flower.style.animationDelay = (Math.random() * 5) + 's';
+                flowersContainer.appendChild(flower);
+            }
+            
+            // Heart button click event
+            const heartBtn = document.getElementById('heartBtn');
+            const hiddenMessage = document.getElementById('hiddenMessage');
+            const closeBtn = document.getElementById('closeBtn');
+            
+            heartBtn.addEventListener('click', function() {
+                hiddenMessage.style.display = 'block';
+                
+                // Create heart explosion effect
+                for (let i = 0; i < 50; i++) {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤';
+                    heart.style.position = 'absolute';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out forwards`;
+                    document.body.appendChild(heart);
+                    
+                    // Remove hearts after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                hiddenMessage.style.display = 'none';
+            });
+            
+            // Add floating effect to messages
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((msg, index) => {
+                msg.style.animationDelay = `${index * 0.3 + 0.5}s`;
+            });
+        });
+    </script>
+</body>
+</html>
